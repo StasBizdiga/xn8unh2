@@ -1,0 +1,54 @@
+<button (click)="add()">Add</button> <button (click)="shuffle()">Shuffle
+</button>
+<br/>
+<br/>
+DEBUG LIST: 
+
+<ul class="example-list"><li *ngFor="let item of items">{{ item.name }}</li></ul>
+
+
+<br/>
+
+<!-- vvv
+//needed for some reason -->
+<div cdkDropList></div>  
+
+
+<!-- ^^^
+//needed for some reason -->
+
+
+
+<h3>Picker</h3>  
+  <ul class="flex-grid"
+    cdkDropList
+    #picker="cdkDropList"
+    [cdkDropListData]="pickerItems"
+    cdkDropListSortingDisabled
+    [cdkDropListConnectedTo]="[editor]"
+    (cdkDropListDropped)="drop($event)"
+    (cdkDropListExited)="exited($event)"
+    (cdkDropListEntered)="entered()"
+  >
+    <li class="item span-{{item.width}}" *ngFor="let item of pickerItems" cdkDrag [cdkDragData]="item">
+      <div class="item span-{{item.width}}" *cdkDragPlaceholder>
+        <a>{{ item.name }}</a>
+      </div>
+      <a>{{ item.name }}</a>
+    </li>
+  </ul> 
+
+<h3>Editor</h3>
+
+<ul
+class="flex-grid"
+cdkDropList
+#editor="cdkDropList"
+[cdkDropListData]="items"
+(cdkDropListDropped)="drop($event)"
+>
+    <li class="item span-{{item.width}}" *ngFor="let item of items; let idx = index" cdkDrag>
+      {{item.name}}
+      <input min="1" max="4" value="4" step="1" type="number" class='form-control mini' [(ngModel)]="item.width" style=" width: 40px;" />
+    </li>
+  </ul> 
